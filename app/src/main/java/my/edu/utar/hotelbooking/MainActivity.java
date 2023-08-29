@@ -23,12 +23,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.startDateBt);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttonStart = (Button) findViewById(R.id.startDateBt);
+        buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(getSupportFragmentManager(), "date picker");
+                DatePickerFragment datePicker = DatePickerFragment.newInstance(R.id.startDateBt);
+                datePicker.show(getSupportFragmentManager(), "start_date_picker");
+            }
+        });
+
+        Button buttonEnd = (Button) findViewById(R.id.endDateBt);
+        buttonEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment datePicker = DatePickerFragment.newInstance(R.id.endDateBt);
+                datePicker.show(getSupportFragmentManager(), "end_date_picker");
             }
         });
     }
