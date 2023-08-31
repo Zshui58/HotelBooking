@@ -6,37 +6,34 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     CardView cardView;
+    Button buttonStart;
+    Button buttonEnd;
+    RecyclerView recyclerView;
+    HotelAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cardView = findViewById(R.id.cardView);
+        recyclerView = findViewById(R.id.recyclerView);
 
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent DetailActivity = new Intent(MainActivity.this, DetailActivity.class);
-                startActivity(DetailActivity);
-            }
-        });
-
-        Button buttonStart = (Button) findViewById(R.id.startDateBt);
+        buttonStart = (Button) findViewById(R.id.startDateBt);
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-        Button buttonEnd = (Button) findViewById(R.id.endDateBt);
+        buttonEnd = (Button) findViewById(R.id.endDateBt);
         buttonEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +50,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 datePicker.show(getSupportFragmentManager(), "end_date_picker");
             }
         });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<HotelItem> itemList = new ArrayList<>();
+        itemList.add(new HotelItem("The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one));
+        itemList.add(new HotelItem("Sky Bar at Waldorf Astoria", 4.75f, 0, R.drawable.sunway1));
+
+        adapter = new HotelAdapter(this, itemList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
