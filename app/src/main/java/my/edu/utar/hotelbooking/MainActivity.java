@@ -7,11 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -25,11 +30,34 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     Button buttonEnd;
     RecyclerView recyclerView;
     HotelAdapter adapter;
+    FirebaseAuth auth;
+    Button btn;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
+        btn = findViewById(R.id.logoutButton);
+        user = auth.getCurrentUser();
+        if(user == null){
+            Intent intent = new Intent(this,Login.class);
+            startActivity(intent);
+            finish();
+        }
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this,Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         recyclerView = findViewById(R.id.recyclerView);
 
