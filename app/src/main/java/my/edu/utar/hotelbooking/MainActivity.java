@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,36 +33,40 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     FirebaseAuth auth;
     Button btn;
     FirebaseUser user;
+    List<HotelItem> itemList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseApp.initializeApp(this); // For Realtime Database
+        // Initialize Firebase (you can also do this in your Application class)
+        FirebaseApp.initializeApp(this);
+
         auth = FirebaseAuth.getInstance();
         btn = findViewById(R.id.logoutButton);
         user = auth.getCurrentUser();
-        if(user == null){
-            Intent intent = new Intent(this,Login.class);
+
+        if (user == null) {
+            Intent intent = new Intent(this, Login.class);
             startActivity(intent);
             finish();
         }
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(MainActivity.this,Login.class);
+                Intent intent = new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-
         recyclerView = findViewById(R.id.recyclerView);
 
-        buttonStart = (Button) findViewById(R.id.startDateBt);
+        buttonStart = findViewById(R.id.startDateBt);
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-        buttonEnd = (Button) findViewById(R.id.endDateBt);
+        buttonEnd = findViewById(R.id.endDateBt);
         buttonEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,27 +86,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<HotelItem> itemList = new ArrayList<>();
-        itemList.add(new HotelItem(1,"The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one));
-        itemList.add(new HotelItem(2,"Sunway Putra Hotel Kuala Lumpur", 4.75f, 0, R.drawable.sunway1));
-
+        // Initialize and set up the RecyclerView adapter
         adapter = new HotelAdapter(this, itemList);
         recyclerView.setAdapter(adapter);
 
-        // Get a reference to the Firebase database
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        // Create a reference to the "hotels" node in the database
-        DatabaseReference hotelsReference = databaseReference.child("hotels");
-
-        // Iterate through the itemList and push each Hotel object to the "hotels" node
-        for (HotelItem hotel : itemList) {
-            // Push the hotel object to generate a unique key for each entry
-            DatabaseReference newHotelReference = hotelsReference.push();
-
-            // Set the hotel object as the value for the generated key
-            newHotelReference.setValue(hotel);
-        }
+        // Add hotel items to the database and the list
+        addHotelToDatabase("The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one);
+        addHotelToDatabase("Sunway Putra Hotel Kuala Lumpur", 4.75f, 0, R.drawable.sunway1);
     }
 
     @Override
@@ -114,11 +103,27 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-        TextView textView = (TextView) findViewById(R.id.startdate);
+        TextView textView = findViewById(R.id.startdate);
         textView.setText(currentDateString);
 
-        TextView textView1 = (TextView) findViewById(R.id.endDate);
+        TextView textView1 = findViewById(R.id.endDate);
         textView1.setText(currentDateString);
     }
 
+    // Define a method to add a hotel item to the list and database
+    private void addHotelToDatabase(String name, float rating, int price, int imageResource) {
+        HotelItem hotel = new HotelItem(itemList.size() + 1, name, rating, price, imageResource);
+
+        // Add the hotel item to the list
+        itemList.add(hotel);
+
+        // Add the hotel item to the Firebase Realtime Database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference hotelsReference = databaseReference.child("hotels");
+        DatabaseReference newHotelReference = hotelsReference.push();
+        newHotelReference.setValue(hotel);
+
+        // Notify the adapter that the data has changed
+        adapter.notifyDataSetChanged();
+    }
 }
