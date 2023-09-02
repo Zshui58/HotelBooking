@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <array name="room_types">
+            <item>Standard Single Room</item>
+            <item>Standard Double Room</item>
+            <item>Deluxe Twin</item>
+            <item>Deluxe Family</item>
+            <item>Executive Suite</item>
+            <item>Superior Suite</item>
+            <item>Deluxe Suite</item>
+            <item>Premier Suite</item>
+            <!-- Add more room type options as needed -->
+        </array>
+
+</resources>

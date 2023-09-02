@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HotelBooking">
         <activity
+            android:name=".BookingRoomDetails"
+            android:exported="false" />
+        <activity
             android:name=".ReviewActivity"
             android:exported="false" />
         <activity
