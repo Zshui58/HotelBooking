@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "639518812708",
+    "firebase_url": "https://booking-user-419aa-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "booking-user-419aa",
+    "storage_bucket": "booking-user-419aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639518812708:android:f893993a1fb8013870c6b1",
+        "android_client_info": {
+          "package_name": "booking.hotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639518812708-8r27qchuhcj8t82q82btddclipr42p2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNaU8hvpJCtYsUXrajm3k81sTndRdE5sc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639518812708-8r27qchuhcj8t82q82btddclipr42p2r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639518812708:android:3f7d5c0eaa060bb870c6b1",
+        "android_client_info": {
+          "package_name": "my.edu.utar.hotelbooking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639518812708-8r27qchuhcj8t82q82btddclipr42p2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNaU8hvpJCtYsUXrajm3k81sTndRdE5sc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639518812708-8r27qchuhcj8t82q82btddclipr42p2r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
