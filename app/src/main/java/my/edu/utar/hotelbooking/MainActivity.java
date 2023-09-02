@@ -121,16 +121,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         hotelAdapter = new HotelAdapter(this, itemList);
         recyclerView.setAdapter(hotelAdapter);
 
-        // Add hotel items to the database and the list
         addHotelToDatabase("The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one);
         addHotelToDatabase("Sunway Putra Hotel Kuala Lumpur", 4.75f, 0, R.drawable.sunway1);
-
-        loadAllHotelItems();
+        // Fetch hotel data from Firebase and populate the RecyclerView
         fetchAndPopulateData();
     }
 
-    private void fetchAndPopulateData(){
-
+    private void fetchAndPopulateData() {
         // Attach a ValueEventListener to fetch data from Firebase
         firebaseHelper.getHotels(new ValueEventListener() {
             @Override
@@ -149,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle database error
+                Toast.makeText(MainActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -185,20 +183,40 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         textView1.setText(currentDateString);
     }
 
-    // Define a method to add a hotel item to the list and database
-    private void addHotelToDatabase(String name, float rating, int price, int imageResource) {
-        HotelItem hotel = new HotelItem(itemList.size() + 1, name, rating, price, imageResource);
-
-        // Add the hotel item to the list
-        itemList.add(hotel);
-
-        // Add the hotel item to the Firebase Realtime Database
+    // Method to add a new hotel item to the Firebase Realtime Database, checking for duplicates
+    private void addHotelToDatabase(String title, float rating, int price, int imageResource) {
+        // Check if the hotel with the same title already exists in the database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelsReference = databaseReference.child("hotels");
-        DatabaseReference newHotelReference = hotelsReference.push();
-        newHotelReference.setValue(hotel);
 
-        // Notify the adapter that the data has changed
-        hotelAdapter.notifyDataSetChanged();
+        hotelsReference.orderByChild("title").equalTo(title).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // A hotel with the same title already exists in the database
+                    // You can handle this case, e.g., show a message to the user
+                    Toast.makeText(MainActivity.this, "Hotel already exists in the database", Toast.LENGTH_SHORT).show();
+                } else {
+                    // The hotel does not exist, so add it to the database
+                    HotelItem hotel = new HotelItem(itemList.size() + 1, title, rating, price, imageResource);
+
+                    DatabaseReference newHotelReference = hotelsReference.push();
+                    newHotelReference.setValue(hotel);
+
+                    // Add the hotel item to the list
+                    itemList.add(hotel);
+
+                    // Notify the adapter that the data has changed
+                    hotelAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors that may occur during the database query
+                Toast.makeText(MainActivity.this, "Database query error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 }
