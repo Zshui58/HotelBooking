@@ -35,21 +35,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HotelItem item = itemList.get(position);
-        holder.titleTextView.setText(item.getTitle());
-        holder.ratingBar.setRating(item.getRating());
-        holder.ratingTextView.setText(String.valueOf(item.getRating()));
-        holder.reviewCountTextView.setText("(" + item.getReviewCount() + ")");
-        holder.imageView.setImageResource(item.getImageResId());
-
-        // Set click listener for the card view
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle the click event, e.g., start the detail activity
-                Intent detailIntent = new Intent(context, DetailActivity.class);
-                context.startActivity(detailIntent);
-            }
-        });
+        holder.bind(item); // Pass the HotelItem to the ViewHolder to set data
     }
 
     @Override
@@ -74,7 +60,37 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
             ratingTextView = itemView.findViewById(R.id.ratingTextView);
             reviewCountTextView = itemView.findViewById(R.id.reviewCountTextView);
             cardView = itemView.findViewById(R.id.cardView);
+
+            // Set click listener for the specific CardView
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        HotelItem clickedItem = itemList.get(position);
+
+                        // Create an intent to start the DetailActivity
+                        Intent detailIntent = new Intent(context, DetailActivity.class);
+
+                        // Pass the item's identifier to DetailActivity
+                        detailIntent.putExtra("hotelItemId", clickedItem.getId());
+
+                        // Start the detail activity
+                        context.startActivity(detailIntent);
+                    }
+                }
+            });
         }
+
+        public void bind(HotelItem item) {
+            titleTextView.setText(item.getTitle());
+            ratingBar.setRating(item.getRating());
+            ratingTextView.setText(String.valueOf(item.getRating()));
+            reviewCountTextView.setText("(" + item.getReviewCount() + ")");
+            imageView.setImageResource(item.getImageResId());
+        }
+
     }
+
 }
 

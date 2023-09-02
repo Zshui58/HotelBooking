@@ -14,8 +14,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
@@ -25,7 +27,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    CardView cardView;
     Button buttonStart;
     Button buttonEnd;
     RecyclerView recyclerView;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseApp.initializeApp(this); // For Realtime Database
         auth = FirebaseAuth.getInstance();
         btn = findViewById(R.id.logoutButton);
         user = auth.getCurrentUser();
@@ -82,11 +84,26 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<HotelItem> itemList = new ArrayList<>();
-        itemList.add(new HotelItem("The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one));
-        itemList.add(new HotelItem("Sky Bar at Waldorf Astoria", 4.75f, 0, R.drawable.sunway1));
+        itemList.add(new HotelItem(1,"The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one));
+        itemList.add(new HotelItem(2,"Sunway Putra Hotel Kuala Lumpur", 4.75f, 0, R.drawable.sunway1));
 
         adapter = new HotelAdapter(this, itemList);
         recyclerView.setAdapter(adapter);
+
+        // Get a reference to the Firebase database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        // Create a reference to the "hotels" node in the database
+        DatabaseReference hotelsReference = databaseReference.child("hotels");
+
+        // Iterate through the itemList and push each Hotel object to the "hotels" node
+        for (HotelItem hotel : itemList) {
+            // Push the hotel object to generate a unique key for each entry
+            DatabaseReference newHotelReference = hotelsReference.push();
+
+            // Set the hotel object as the value for the generated key
+            newHotelReference.setValue(hotel);
+        }
     }
 
     @Override
