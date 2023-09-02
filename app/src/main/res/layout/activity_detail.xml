@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,184 +7,173 @@
     android:id="@+id/detailLayout"
     tools:context=".DetailActivity">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/image_one" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/image_one" />
 
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="Mughal Gardens, Srinagar"
-        android:textColor="@android:color/background_dark"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView3"
+            android:layout_marginStart="-34dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@id/imageView4"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Mughal Gardens, Srinagar"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView3"
+            android:layout_marginStart="71dp"
+            android:layout_marginTop="19dp"
+            android:layout_toEndOf="@id/textTitle"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="RM200/night"
+            android:textColor="@android:color/background_dark"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageRating"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_below="@id/textTitle"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="14dp"
+            app:srcCompat="@drawable/ic_baseline_star_rate_24" />
+
+        <TextView
+            android:id="@+id/rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textTitle"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="14dp"
+            android:layout_toEndOf="@id/imageRating"
+            android:fontFamily="@font/open_sans_light"
+            android:text="4.91 "
+            android:textColor="@android:color/background_dark" />
+
+        <TextView
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textTitle"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="14dp"
+            android:layout_toEndOf="@id/imageRating"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="88 reviews "
+            android:textColor="@android:color/background_dark" />
+
+        <TextView
+            android:id="@+id/textSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textTitle"
+            android:layout_marginTop="41dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Summary :"
+            android:textColor="#044363"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textSumDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textSummary"
+            android:layout_marginTop="-4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Mughal Gardens which have truly changed the face of the Mughal Empire is one of the most popular and the most visited tourist attractions of Srinagar."
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Photogellery"
+            android:textColor="@android:color/background_dark"
+            android:layout_below="@id/textSumDetail"/>
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/textPhoto"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/image_one" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/textPhoto"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@id/imageView8"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/image_two" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:scaleType="fitXY"
+            android:layout_below="@id/textPhoto"
+            android:layout_toEndOf="@id/imageView9"
+            app:srcCompat="@drawable/image_three" />
+
+        <ImageView
+            android:id="@+id/imageLike"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@id/imageView10"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/like" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/blue"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Start Booking Your Trip"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/imageView10"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/imageLike"/>
 
 
-    <TextView
-        android:id="@+id/textPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:text="RM200/night"
-        android:textColor="@android:color/background_dark"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.953"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imageRating"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="376dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintTop_toBottomOf="@id/textTitle"
-        app:layout_constraintTop_toTopOf="@+id/textTitle"
-        app:srcCompat="@drawable/ic_baseline_star_rate_24" />
-
-    <TextView
-        android:id="@+id/rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/open_sans_light"
-        android:text="4.91 "
-        android:textColor="@android:color/background_dark"
-        app:layout_constraintStart_toEndOf="@+id/imageRating"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
-
-    <TextView
-        android:id="@+id/review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:text="88 reviews "
-        android:textColor="@android:color/background_dark"
-        app:layout_constraintStart_toEndOf="@+id/rate"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
-
-    <TextView
-        android:id="@+id/textSummary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="Summary :"
-        android:textColor="#044363"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/textTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
-
-    <TextView
-        android:id="@+id/textSumDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:text="Mughal Gardens which have truly changed the face of the Mughal Empire is one of the most popular and the most visited tourist attractions of Srinagar."
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textSummary"
-        app:layout_constraintTop_toBottomOf="@+id/textSummary"/>
-
-    <TextView
-        android:id="@+id/textPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="Photogellery"
-        android:textColor="@android:color/background_dark"
-        app:layout_constraintStart_toStartOf="@+id/textSumDetail"
-        app:layout_constraintTop_toBottomOf="@+id/textSumDetail" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPhoto"
-        app:srcCompat="@drawable/image_one" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/imageView8"
-        app:srcCompat="@drawable/image_two" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintStart_toEndOf="@+id/imageView9"
-        app:layout_constraintTop_toTopOf="@+id/imageView9"
-        app:srcCompat="@drawable/image_three" />
-
-    <ImageView
-        android:id="@+id/imageLike"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/like" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/blue"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="Start Booking Your Trip"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/imageLike"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageLike"
-        app:layout_constraintTop_toTopOf="@+id/imageLike"
-        app:layout_constraintVertical_bias="0.0" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

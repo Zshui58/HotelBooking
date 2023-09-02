@@ -3,20 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Shu Hui/.gradle/caches/transforms-3/7d0b10e57e8c490b7e2d1f89a39dc698/transformed/material-1.6.0/res/drawable/design_snackbar_background.xml" value="0.18958333333333333" />
+        <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.2109375" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable/book_button_bg.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable/custom_search_view.xml" value="0.1" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable/ic_settings.xml" value="0.14537037037037037" />
+        <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable/text_border.xml" value="0.2109375" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/font/font.xml" value="0.1" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_booking_room_details.xml" value="0.2" />
-        <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_detail.xml" value="0.152" />
+        <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_detail.xml" value="0.2" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_details.xml" value="0.2" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_main.xml" value="0.2578397212543554" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_payment.xml" value="0.25" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_review.xml" value="0.264" />
+        <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/hotel_item.xml" value="0.1" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/layout/item_review.xml" value="0.264" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />

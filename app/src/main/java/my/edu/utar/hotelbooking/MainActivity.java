@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     Button buttonStart;
     Button buttonEnd;
     RecyclerView recyclerView;
-    //HotelAdapter adapter;
     FirebaseAuth auth;
     Button btn;
     FirebaseUser user;
