@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> {
@@ -23,6 +24,10 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     public HotelAdapter(Context context, List<HotelItem> itemList) {
         this.context = context;
         this.itemList = itemList;
+        this.itemList = new ArrayList<>();
+    }
+
+    public HotelAdapter(MainActivity context) {
     }
 
     @NonNull
@@ -42,6 +47,15 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     public int getItemCount() {
 
         return itemList.size();
+    }
+
+    public void setItemList(List<HotelItem> itemList) {
+        this.itemList = itemList;
+        notifyDataSetChanged();
+    }
+
+    public List<HotelItem> getItemList() {
+        return itemList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

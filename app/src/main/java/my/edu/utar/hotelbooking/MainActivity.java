@@ -3,9 +3,11 @@ package my.edu.utar.hotelbooking;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +32,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    SearchView searchView;
     Button buttonStart;
     Button buttonEnd;
     RecyclerView recyclerView;
-    HotelAdapter adapter;
+    //HotelAdapter adapter;
     FirebaseAuth auth;
     Button btn;
     FirebaseUser user;
     List<HotelItem> itemList = new ArrayList<>();
+    private HotelAdapter hotelAdapter;
+    FirebaseHelper firebaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         // Initialize Firebase (you can also do this in your Application class)
         FirebaseApp.initializeApp(this);
+        // Initialize FirebaseHelper
+        firebaseHelper = new FirebaseHelper();
 
         auth = FirebaseAuth.getInstance();
         btn = findViewById(R.id.logoutButton);
@@ -67,7 +74,29 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
+        searchView = findViewById(R.id.searchView);
         recyclerView = findViewById(R.id.recyclerView);
+
+        // Handle search query changes in the SearchView
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)) {
+                    // If the search query is empty, show all hotel items
+                    loadAllHotelItems();
+                } else {
+                    // Filter the hotel items based on the search query
+                    List<HotelItem> filteredList = filterHotels(hotelAdapter.getItemList(), newText);
+                    hotelAdapter.setItemList(filteredList);
+                }
+                return true;
+            }
+        });
 
         buttonStart = findViewById(R.id.startDateBt);
         buttonStart.setOnClickListener(new View.OnClickListener() {
@@ -90,15 +119,56 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize and set up the RecyclerView adapter
-        adapter = new HotelAdapter(this, itemList);
-        recyclerView.setAdapter(adapter);
+        hotelAdapter = new HotelAdapter(this, itemList);
+        recyclerView.setAdapter(hotelAdapter);
 
-        // Fetch existing data from Firebase and update itemList
-        fetchExistingDataFromFirebase();
-
-        // Now, you can add new hotel items to the database and the list
+        // Add hotel items to the database and the list
         addHotelToDatabase("The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one);
         addHotelToDatabase("Sunway Putra Hotel Kuala Lumpur", 4.75f, 0, R.drawable.sunway1);
+
+        loadAllHotelItems();
+        fetchAndPopulateData();
+    }
+
+    private void fetchAndPopulateData(){
+
+        // Attach a ValueEventListener to fetch data from Firebase
+        firebaseHelper.getHotels(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<HotelItem> hotels = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // Parse hotel data and create HotelItem objects
+                    HotelItem hotel = snapshot.getValue(HotelItem.class);
+                    hotels.add(hotel);
+                }
+
+                // Set the fetched data to the RecyclerView adapter
+                hotelAdapter.setItemList(hotels);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle database error
+            }
+        });
+    }
+
+    private void loadAllHotelItems() {
+        // Populate the RecyclerView with all hotel items
+        hotelAdapter.setItemList(itemList);
+    }
+
+    // Helper method to filter hotel items
+    private List<HotelItem> filterHotels(List<HotelItem> itemList, String query) {
+        query = query.toLowerCase();
+        List<HotelItem> filteredList = new ArrayList<>();
+        for (HotelItem item : itemList) {
+            if (item.getTitle().toLowerCase().contains(query)) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
     }
 
     @Override
@@ -116,61 +186,20 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         textView1.setText(currentDateString);
     }
 
-    // Method to fetch existing data from Firebase and update itemList
-    private void fetchExistingDataFromFirebase() {
+    // Define a method to add a hotel item to the list and database
+    private void addHotelToDatabase(String name, float rating, int price, int imageResource) {
+        HotelItem hotel = new HotelItem(itemList.size() + 1, name, rating, price, imageResource);
+
+        // Add the hotel item to the list
+        itemList.add(hotel);
+
+        // Add the hotel item to the Firebase Realtime Database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelsReference = databaseReference.child("hotels");
+        DatabaseReference newHotelReference = hotelsReference.push();
+        newHotelReference.setValue(hotel);
 
-        hotelsReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                itemList.clear(); // Clear the list to avoid duplicates
-
-                for (DataSnapshot hotelSnapshot : dataSnapshot.getChildren()) {
-                    HotelItem hotel = hotelSnapshot.getValue(HotelItem.class);
-                    itemList.add(hotel);
-                }
-
-                // Notify the adapter that the data has changed
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle any errors that may occur during the database query
-                Toast.makeText(MainActivity.this, "Database query error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // Method to add a new hotel item to the Firebase Realtime Database
-    private void addHotelToDatabase(String title, float rating, int price, int imageResource) {
-        // Check if the hotel with the same title already exists in the database
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference hotelsReference = databaseReference.child("hotels");
-
-        hotelsReference.orderByChild("title").equalTo(title).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    //Toast.makeText(MainActivity.this, "Hotel already exists in the database", Toast.LENGTH_SHORT).show();
-                } else {
-                    // The hotel does not exist, so add it to the database
-                    HotelItem hotel = new HotelItem(itemList.size() + 1, title, rating, price, imageResource);
-
-                    DatabaseReference newHotelReference = hotelsReference.push();
-                    newHotelReference.setValue(hotel);
-
-                    // Notify the adapter that the data has changed
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle any errors that may occur during the database query
-                Toast.makeText(MainActivity.this, "Database query error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Notify the adapter that the data has changed
+        hotelAdapter.notifyDataSetChanged();
     }
 }
