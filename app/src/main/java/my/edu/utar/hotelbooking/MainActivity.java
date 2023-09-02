@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
