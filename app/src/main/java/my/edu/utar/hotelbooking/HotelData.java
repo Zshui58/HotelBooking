@@ -10,6 +10,15 @@ public class HotelData {
         // Add more hotel data as needed
         return hotel;
     }
+
+    public static Hotel getSelectedHotel1() {
+        // Simulated hotel data
+        Hotel hotel = new Hotel();
+        hotel.setName("Sunway Putra Hotel Kuala Lumpur");
+        hotel.setAddress("100, Jalan Putra, Chow Kit, 50350 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur");
+        // Add more hotel data as needed
+        return hotel;
+    }
 }
 
 class Hotel {

@@ -32,6 +32,12 @@ public class BookingRoomDetails extends AppCompatActivity {
     Spinner childrenSpinner;
     TextView roomPriceTextView;
     String selectedRoomType;
+    TextView numberOfRoomsTextView;
+    TextView numberOfNightsTextView;
+    TextView adminFeeTextView;
+    TextView totalTextView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,12 @@ public class BookingRoomDetails extends AppCompatActivity {
 
         // Set the ArrayAdapter to the room type Spinner
         roomTypeSpinner.setAdapter(roomTypeAdapter);
+
+
+        numberOfRoomsTextView = findViewById(R.id.numberOfRoomsTextView);
+        numberOfNightsTextView = findViewById(R.id.numberOfNightsTextView);
+        adminFeeTextView = findViewById(R.id.adminFeeTextView);
+        totalTextView = findViewById(R.id.totalTextView);
 
 
         // Set up a selection listener for the room type Spinner
@@ -167,10 +179,13 @@ public class BookingRoomDetails extends AppCompatActivity {
 
         // Replace with the actual method to retrieve selected hotel information
         Hotel selectedHotel = HotelData.getSelectedHotel();
+        Hotel selectedHotel1 = HotelData.getSelectedHotel1();
 
         // Set the text of the TextViews with the selected hotel information
         hotelNameTextView.setText(selectedHotel.getName());
         hotelAddressTextView.setText(selectedHotel.getAddress());
+        hotelNameTextView.setText(selectedHotel1.getName());
+        hotelAddressTextView.setText(selectedHotel1.getAddress());
 
         arrivalDateButton = findViewById(R.id.arrivalDateButton);
         departureDateButton = findViewById(R.id.departureDateButton);
@@ -192,6 +207,7 @@ public class BookingRoomDetails extends AppCompatActivity {
             }
         });
     }
+
 
     private double getRoomPrice(String selectedRoomType) {
         return 0;
