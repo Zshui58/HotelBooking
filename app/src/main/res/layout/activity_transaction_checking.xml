@@ -1,0 +1,43 @@
+<!-- activity_transaction_checking.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TransactionCheckingActivity">
+
+    <ListView
+        android:id="@+id/transactionListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_below="@id/bookingHeaderLayout" />
+
+    <LinearLayout
+        android:id="@+id/bookingHeaderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/myProfileTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Profile"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/bookingTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Booking"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:drawableBottom="@drawable/underline" />
+    </LinearLayout>
+</RelativeLayout>

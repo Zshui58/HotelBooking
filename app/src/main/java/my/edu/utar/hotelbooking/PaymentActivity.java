@@ -1,6 +1,7 @@
 package my.edu.utar.hotelbooking;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,7 +15,11 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class PaymentActivity extends Activity {
 
@@ -22,9 +27,12 @@ public class PaymentActivity extends Activity {
     private EditText editCardNumber, editExpiration, editCVV, editZipCode;
     private Spinner spinnerCountry;
     private Button btnSubmit;
+    private Button viewTransactionsButton;
     private CheckBox checkBoxSaveForFutureUse;
     private SharedPreferences sharedPreferences;
-
+    private List<Transaction> transactionHistory = new ArrayList<>();
+    private String checkInDate;
+    private String checkOutDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +41,23 @@ public class PaymentActivity extends Activity {
 
         btnExit = findViewById(R.id.btnExit);
         editCardNumber = findViewById(R.id.editCardNumber);
-
         editExpiration = findViewById(R.id.editExpiration);
         editCVV = findViewById(R.id.editCVC);
         editZipCode = findViewById(R.id.editZipCode);
         spinnerCountry = findViewById(R.id.spinnerCountry);
         checkBoxSaveForFutureUse = findViewById(R.id.checkBoxSaveForFutureUse);
         btnSubmit = findViewById(R.id.btnSubmit);
+        viewTransactionsButton = findViewById(R.id.viewTransactionsButton); // Initialize viewTransactionsButton
         sharedPreferences = getSharedPreferences("PaymentData", MODE_PRIVATE);
+
+
+
+        //Retrieve data from intent
+        Intent intentReceive = getIntent();
+        if (intentReceive != null) {
+            checkInDate = intentReceive.getStringExtra("checkInDate");
+            checkOutDate = intentReceive.getStringExtra("checkOutDate");
+        }
 
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +65,6 @@ public class PaymentActivity extends Activity {
                 finish(); // Finish the current activity and go back
             }
         });
-
 
         editExpiration.addTextChangedListener(new TextWatcher() {
             @Override
@@ -80,7 +96,7 @@ public class PaymentActivity extends Activity {
 
         // Populate spinner with country options
         String[] countries = {"United States", "Canada", "Malaysia", "Singapore"
-                , "HongKong", "Japan", "Thailand", "German", "China", "Australia", "Others"};
+                , "HongKong", "Japan", "Thailand", "Germany", "China", "Australia", "Others"};
         Arrays.sort(countries);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, countries);
@@ -91,6 +107,26 @@ public class PaymentActivity extends Activity {
             @Override
             public void onClick(View v) {
                 onSubmitClick(v);
+            }
+        });
+
+
+        viewTransactionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                // Create an Intent to start the TransactionCheckingActivity
+                Intent intent = new Intent(PaymentActivity.this, TransactionCheckingActivity.class);
+
+                // Pass the transactionHistory list and the previous activity data to the TransactionCheckingActivity
+                intent.putExtra("transactionChecking", (Serializable) transactionHistory);
+//                intent.putExtra("selectedRoomType", selectedRoomType);
+                intent.putExtra("checkInDate", checkInDate);
+                intent.putExtra("checkOutDate", checkOutDate);
+
+                // Start the TransactionCheckingActivity
+                startActivity(intent);
             }
         });
     }
@@ -121,45 +157,48 @@ public class PaymentActivity extends Activity {
             return;
         }
 
-        boolean paymentSuccess = simulatePaymentProcessing();
+        boolean paymentSuccess = simulatePaymentProcessing(cardNumber, expiration, cvv);
 
         if (paymentSuccess) {
+            // Create a transaction record
+            Transaction transaction = new Transaction();
+            transaction.setCardNumber(cardNumber);
+            transaction.setExpiration(expiration);
+            transaction.setCvv(cvv);
+            transaction.setCountry(selectedCountry);
+            transaction.setZipCode(editZipCode.getText().toString().trim());
+            transaction.setPaymentStatus(true);
+            transaction.setPaymentDate(new Date());
+
+            // Add the transaction to the history
+            transactionHistory.add(transaction);
+
+            // Display a success message
             Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Payment failed. Please try again.",
-                    Toast.LENGTH_SHORT).show();
+            // Display a failure message
+            Toast.makeText(this, "Payment failed. Please try again.", Toast.LENGTH_SHORT).show();
         }
 
-        String zipCode = editZipCode.getText().toString().trim();
-        boolean saveForFutureUse = checkBoxSaveForFutureUse.isChecked();
-
-        if (zipCode.isEmpty()) {
-            Toast.makeText(this, "Please enter ZIP Code.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (saveForFutureUse) {
-            savePaymentData(cardNumber, expiration, cvv, selectedCountry, zipCode);
+        if (checkBoxSaveForFutureUse.isChecked()) {
+            savePaymentData(cardNumber, expiration, cvv, selectedCountry);
         }
     }
 
-    private void savePaymentData(String cardNumber, String expiration, String cvv,
-                                 String country, String zipCode) {
+    private void savePaymentData(String cardNumber, String expiration, String cvv, String country) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("CardNumber", cardNumber);
         editor.putString("Expiration", expiration);
         editor.putString("CVV", cvv);
         editor.putString("Country", country);
-        editor.putString("ZipCode", zipCode);
         editor.apply();
         Toast.makeText(this, "Payment information saved for future use.",
                 Toast.LENGTH_SHORT).show();
     }
 
-    private boolean simulatePaymentProcessing() {
+    private boolean simulatePaymentProcessing(String cardNumber, String expiration, String cvv) {
         // Simulate payment processing logic here
         // For demonstration purposes, let's assume payment is successful 80% of the time
         return Math.random() < 0.8;
     }
-
 }
