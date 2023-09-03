@@ -146,6 +146,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
+        String hotelTitle3="The Platinum Kuala Lumpur by Cozy White";
+        addHotelToDatabase(hotelTitle3, 4.80f, 28, R.drawable.klcc1, new HotelAddedCallback() {
+            @Override
+            public void onHotelAdded(String hotelId) {
+                addHotelDetailToDatabase(hotelId,hotelTitle3,"4.80","RM540/night","Set in Kuala Lumpur, 1.2 km from Petronas Twin Towers and 2 km from the centre, The Platinum Kuala Lumpur by Cozy White offers air-conditioned accommodation with free WiFi, and a rooftop pool.","28 reviews",R.drawable.klcc1,R.drawable.klcc2, R.drawable.klcc3, R.drawable.klcc4);
+                hotelAdapter.notifyDataSetChanged();
+            }
+        });
+
         fetchAndPopulateData();
         recyclerView.setAdapter(hotelAdapter);
     }
