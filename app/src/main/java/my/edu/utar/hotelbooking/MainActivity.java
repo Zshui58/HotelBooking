@@ -40,8 +40,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     Button btn;
     FirebaseUser user;
     List<HotelItem> itemList = new ArrayList<>();
+    List<HotelDetail>detailList=new ArrayList<>();
+    HotelAddedCallback callback;
     private HotelAdapter hotelAdapter;
     FirebaseHelper firebaseHelper;
+    DatabaseReference newHotelReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,13 +121,29 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize and set up the RecyclerView adapter
-        hotelAdapter = new HotelAdapter(this, itemList);
-        recyclerView.setAdapter(hotelAdapter);
+        hotelAdapter = new HotelAdapter(this, itemList,detailList);
 
-        addHotelToDatabase("The START Hotel, Casino & SkyPod", 4.91f, 510, R.drawable.image_one);
-        addHotelToDatabase("Sunway Putra Hotel Kuala Lumpur", 4.75f, 0, R.drawable.sunway1);
-        // Fetch hotel data from Firebase and populate the RecyclerView
+
+        String hotelTitle = "Mughal Gardens, Srinagar";
+        addHotelToDatabase(hotelTitle, 4.91f, 510, R.drawable.image_one, new HotelAddedCallback() {
+            @Override
+            public void onHotelAdded(String hotelId) {
+                addHotelDetailToDatabase(hotelId,hotelTitle,"4.91","RM200/night","Mughal Gardens which have truly changed the face of the Mughal Empire is one of the most popular and the most visited tourist attractions of Srinagar.","88 reviews",R.drawable.image_one,R.drawable.image_one, R.drawable.image_two, R.drawable.image_three);
+                hotelAdapter.notifyDataSetChanged();
+            }
+        });
+
+        String hotelTitle1="Sunway Putra Hotel Kuala Lumpur";
+        addHotelToDatabase(hotelTitle1, 4.75f, 0, R.drawable.sunway1, new HotelAddedCallback() {
+            @Override
+            public void onHotelAdded(String hotelId) {
+                addHotelDetailToDatabase(hotelId,hotelTitle1,"4.75","RM340/night","Sunway Putra Hotel Kuala Lumpur is located opposite the World Trade Centre Kuala Lumpur (formerly known as PWTC),","34 reviews",R.drawable.sunway1,R.drawable.sunway2, R.drawable.sunway3, R.drawable.sunway4);
+                hotelAdapter.notifyDataSetChanged();
+            }
+        });
+
         fetchAndPopulateData();
+        recyclerView.setAdapter(hotelAdapter);
     }
 
     private void fetchAndPopulateData() {
@@ -133,14 +152,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<HotelItem> hotels = new ArrayList<>();
+                List<HotelDetail> details = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Parse hotel data and create HotelItem objects
-                    HotelItem hotel = snapshot.getValue(HotelItem.class);
+                    DataSnapshot listSnapshot = snapshot.child("list");
+                    DataSnapshot informationSnapshot = snapshot.child("information");
+                    HotelItem hotel = listSnapshot.getValue(HotelItem.class);
+                    HotelDetail detail = informationSnapshot.getValue(HotelDetail.class);
                     hotels.add(hotel);
+                    details.add(detail);
                 }
 
                 // Set the fetched data to the RecyclerView adapter
                 hotelAdapter.setItemList(hotels);
+                hotelAdapter.setDetailList(details);
+
             }
 
             @Override
@@ -150,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
     }
+
 
     private void loadAllHotelItems() {
         // Populate the RecyclerView with all hotel items
@@ -184,12 +211,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     // Method to add a new hotel item to the Firebase Realtime Database, checking for duplicates
-    private void addHotelToDatabase(String title, float rating, int price, int imageResource) {
+    public void addHotelToDatabase(String title, float rating, int price, int imageResId, HotelAddedCallback callback) {
         // Check if the hotel with the same title already exists in the database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelsReference = databaseReference.child("hotels");
 
-        hotelsReference.orderByChild("title").equalTo(title).addListenerForSingleValueEvent(new ValueEventListener() {
+        hotelsReference.orderByChild("list/title").equalTo(title).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -198,16 +225,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     Toast.makeText(MainActivity.this, "Hotel already exists in the database", Toast.LENGTH_SHORT).show();
                 } else {
                     // The hotel does not exist, so add it to the database
-                    HotelItem hotel = new HotelItem(itemList.size() + 1, title, rating, price, imageResource);
+                    HotelItem hotel = new HotelItem(itemList.size() + 1, title, rating, price, imageResId);
 
-                    DatabaseReference newHotelReference = hotelsReference.push();
-                    newHotelReference.setValue(hotel);
-
-                    // Add the hotel item to the list
-                    itemList.add(hotel);
+                    String hotelId = hotelsReference.push().getKey();
+                    hotelsReference.child(hotelId).child("list").setValue(hotel); // Set the data under "list"
 
                     // Notify the adapter that the data has changed
                     hotelAdapter.notifyDataSetChanged();
+
+                    callback.onHotelAdded(hotelId);
                 }
             }
 
@@ -218,5 +244,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
     }
+
+    private void addHotelDetailToDatabase(String hotelId, String title, String rate, String price,String summary,String review, int imageResource1,int imageResource2,int imageResource3,int imageResource4) {
+        // Check if the hotel with the same title already exists in the database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference hotelsReference = databaseReference.child("hotels");
+
+        HotelDetail hotelDetail = new HotelDetail(detailList.size() + 1, title, rate, price, summary,review,imageResource1,imageResource2,imageResource3,imageResource4);
+
+        hotelsReference.child(hotelId).child("information").setValue(hotelDetail);
+
+        // Add the hotel detail item to the list
+        detailList.add(hotelDetail);
+        // Notify the adapter that the data has changed
+        hotelAdapter.notifyDataSetChanged();
+    }
+
 
 }

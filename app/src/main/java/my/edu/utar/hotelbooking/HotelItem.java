@@ -7,7 +7,7 @@ public class HotelItem {
     private int reviewCount;
     private int imageResId;
 
-    public HotelItem(){
+    public HotelItem() {
 
     }
 

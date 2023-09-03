@@ -19,12 +19,14 @@ import java.util.List;
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> {
 
     private List<HotelItem> itemList;
+    private List<HotelDetail> detailList;
     private Context context;
 
-    public HotelAdapter(Context context, List<HotelItem> itemList) {
+    public HotelAdapter(Context context, List<HotelItem> itemList,List<HotelDetail> detailList) {
         this.context = context;
         this.itemList = itemList;
-        this.itemList = new ArrayList<>();
+        this.detailList = detailList;
+        //this.itemList = new ArrayList<>();
     }
 
     public HotelAdapter(MainActivity context) {
@@ -51,6 +53,11 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
 
     public void setItemList(List<HotelItem> itemList) {
         this.itemList = itemList;
+        notifyDataSetChanged();
+    }
+
+    public void setDetailList(List<HotelDetail> detailList) {
+        this.detailList = detailList;
         notifyDataSetChanged();
     }
 
@@ -89,6 +96,10 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
                         // Pass the item's identifier to DetailActivity
                         detailIntent.putExtra("hotelItemId", clickedItem.getId());
 
+                        // Pass the detailList and selectedItemIndex
+                        detailIntent.putParcelableArrayListExtra("detailList", new ArrayList<>(detailList));
+                        detailIntent.putExtra("selectedItemIndex", position);  // Pass the selected item index
+
                         // Start the detail activity
                         context.startActivity(detailIntent);
                     }
@@ -97,12 +108,15 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
         }
 
         public void bind(HotelItem item) {
-            titleTextView.setText(item.getTitle());
-            ratingBar.setRating(item.getRating());
-            ratingTextView.setText(String.valueOf(item.getRating()));
-            reviewCountTextView.setText("(" + item.getReviewCount() + ")");
-            imageView.setImageResource(item.getImageResId());
+            if (item != null) {
+                titleTextView.setText(item.getTitle());
+                ratingBar.setRating(item.getRating());
+                ratingTextView.setText(String.valueOf(item.getRating()));
+                reviewCountTextView.setText("(" + item.getReviewCount() + ")");
+                imageView.setImageResource(item.getImageResId());
+            }
         }
+
 
     }
 

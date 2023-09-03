@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 public class DetailView {
 
+    private int id;
     private ImageView imageView;
     private TextView titleTextView;
     private TextView priceTextView;
