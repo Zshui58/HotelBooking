@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import androidx.core.util.Pair;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,9 +93,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     // If the search query is empty, show all hotel items
                     loadAllHotelItems();
                 } else {
-                    // Filter the hotel items based on the search query
-                    List<HotelItem> filteredList = filterHotels(hotelAdapter.getItemList(), newText);
-                    hotelAdapter.setItemList(filteredList);
+                    // Filter the hotel items and details based on the search query
+                    Pair<List<HotelItem>, List<HotelDetail>> filteredLists = filterHotels(itemList, detailList, newText);
+
+                    // Update the adapter with the filtered lists
+                    hotelAdapter.setItemList(filteredLists.first);
+                    hotelAdapter.setDetailList(filteredLists.second);
                 }
                 return true;
             }
@@ -151,21 +155,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         firebaseHelper.getHotels(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<HotelItem> hotels = new ArrayList<>();
-                List<HotelDetail> details = new ArrayList<>();
+                //List<HotelItem> hotels = new ArrayList<>();
+                //List<HotelDetail> details = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Parse hotel data and create HotelItem objects
                     DataSnapshot listSnapshot = snapshot.child("list");
                     DataSnapshot informationSnapshot = snapshot.child("information");
                     HotelItem hotel = listSnapshot.getValue(HotelItem.class);
                     HotelDetail detail = informationSnapshot.getValue(HotelDetail.class);
-                    hotels.add(hotel);
-                    details.add(detail);
+                    itemList.add(hotel);
+                    detailList.add(detail);
                 }
 
                 // Set the fetched data to the RecyclerView adapter
-                hotelAdapter.setItemList(hotels);
-                hotelAdapter.setDetailList(details);
+                hotelAdapter.setItemList(itemList);
+                hotelAdapter.setDetailList(detailList);
 
             }
 
@@ -181,19 +185,29 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private void loadAllHotelItems() {
         // Populate the RecyclerView with all hotel items
         hotelAdapter.setItemList(itemList);
+        hotelAdapter.setDetailList(detailList);
     }
 
     // Helper method to filter hotel items
-    private List<HotelItem> filterHotels(List<HotelItem> itemList, String query) {
-        query = query.toLowerCase();
-        List<HotelItem> filteredList = new ArrayList<>();
-        for (HotelItem item : itemList) {
-            if (item.getTitle().toLowerCase().contains(query)) {
-                filteredList.add(item);
+    private Pair<List<HotelItem>, List<HotelDetail>> filterHotels(List<HotelItem> items, List<HotelDetail> details, String query) {
+        int size = Math.min(items.size(), details.size());
+        // Filter the hotel items and details based on the search query
+        List<HotelItem> filteredItems = new ArrayList<>();
+        List<HotelDetail> filteredDetails = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            HotelItem item = items.get(i);
+            HotelDetail detail = details.get(i);
+
+            if (item.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                filteredItems.add(item);
+                filteredDetails.add(detail);
             }
         }
-        return filteredList;
+
+        return new Pair<>(filteredItems, filteredDetails);
     }
+
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
