@@ -1,6 +1,7 @@
 package my.edu.utar.hotelbooking;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,12 +33,6 @@ public class BookingRoomDetails extends AppCompatActivity {
     Spinner childrenSpinner;
     TextView roomPriceTextView;
     String selectedRoomType;
-    TextView numberOfRoomsTextView;
-    TextView numberOfNightsTextView;
-    TextView adminFeeTextView;
-    TextView totalTextView;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +51,6 @@ public class BookingRoomDetails extends AppCompatActivity {
 
         // Set the ArrayAdapter to the room type Spinner
         roomTypeSpinner.setAdapter(roomTypeAdapter);
-
-
-        numberOfRoomsTextView = findViewById(R.id.numberOfRoomsTextView);
-        numberOfNightsTextView = findViewById(R.id.numberOfNightsTextView);
-        adminFeeTextView = findViewById(R.id.adminFeeTextView);
-        totalTextView = findViewById(R.id.totalTextView);
 
 
         // Set up a selection listener for the room type Spinner
@@ -179,13 +168,10 @@ public class BookingRoomDetails extends AppCompatActivity {
 
         // Replace with the actual method to retrieve selected hotel information
         Hotel selectedHotel = HotelData.getSelectedHotel();
-        Hotel selectedHotel1 = HotelData.getSelectedHotel1();
 
         // Set the text of the TextViews with the selected hotel information
         hotelNameTextView.setText(selectedHotel.getName());
         hotelAddressTextView.setText(selectedHotel.getAddress());
-        hotelNameTextView.setText(selectedHotel1.getName());
-        hotelAddressTextView.setText(selectedHotel1.getAddress());
 
         arrivalDateButton = findViewById(R.id.arrivalDateButton);
         departureDateButton = findViewById(R.id.departureDateButton);
@@ -206,8 +192,29 @@ public class BookingRoomDetails extends AppCompatActivity {
                 showDatePicker(departureDateButton);
             }
         });
-    }
 
+        // Find the "Pay" button
+        Button payButton = findViewById(R.id.payButton);
+
+        // Set an OnClickListener for the "Pay" button
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create an explicit intent to start the PaymentActivity
+                Intent transactionIntent = new Intent(BookingRoomDetails.this, PaymentActivity.class);
+
+                // Add any extra data you want to pass to the PaymentActivity, if needed
+                // paymentIntent.putExtra("key", "value");
+                // Pass selectedRoomType, check-in, and check-out dates to TransactionCheckingActivity
+                //transactionIntent.putExtra("selectedRoomType", selectedRoomType);
+                transactionIntent.putExtra("checkInDate", arrivalDateButton.getText().toString());
+                transactionIntent.putExtra("checkOutDate", departureDateButton.getText().toString());
+
+                // Start the PaymentActivity
+                startActivity(transactionIntent);
+            }
+        });
+    }
 
     private double getRoomPrice(String selectedRoomType) {
         return 0;

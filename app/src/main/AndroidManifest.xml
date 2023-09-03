@@ -41,6 +41,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PaymentActivity">
+        </activity>
+        <activity
+            android:name=".TransactionCheckingActivity"
+            android:label="Transaction Checking">
+        </activity>
+
     </application>
 
 </manifest>
