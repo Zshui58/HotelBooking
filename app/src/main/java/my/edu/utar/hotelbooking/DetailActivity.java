@@ -51,6 +51,18 @@ public class DetailActivity extends AppCompatActivity {
             reviewTextView.setText(selectedHotelDetail.getReview());
         }
 
+        ImageView backButton = findViewById(R.id.back);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the click event here, e.g., navigate back to MainActivity
+                Intent intent = new Intent(DetailActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //
         TextView reviewTextView=findViewById(R.id.review);
         reviewTextView.setOnClickListener(new View.OnClickListener() {

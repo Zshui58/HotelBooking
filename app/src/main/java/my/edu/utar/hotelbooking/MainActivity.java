@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,10 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +37,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements
+        DatePickerDialog.OnDateSetListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
     SearchView searchView;
     Button buttonStart;
@@ -46,11 +54,25 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private HotelAdapter hotelAdapter;
     FirebaseHelper firebaseHelper;
     DatabaseReference newHotelReference;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // Initialize Firebase (you can also do this in your Application class)
         FirebaseApp.initializeApp(this);
@@ -58,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         firebaseHelper = new FirebaseHelper();
 
         auth = FirebaseAuth.getInstance();
-        btn = findViewById(R.id.logoutButton);
+        btn = findViewById(R.id.nav_logout);
         user = auth.getCurrentUser();
 
         if (user == null) {
@@ -67,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             finish();
         }
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        /*btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
@@ -75,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 startActivity(intent);
                 finish();
             }
-        });
+        });*/
 
         searchView = findViewById(R.id.searchView);
         recyclerView = findViewById(R.id.recyclerView);
@@ -284,4 +306,28 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                break;
+            case R.id.nav_logout:
+                Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent= new Intent(MainActivity.this,Login.class);
+                startActivity(intent);
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

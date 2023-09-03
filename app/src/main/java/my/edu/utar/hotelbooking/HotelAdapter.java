@@ -26,7 +26,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
         this.context = context;
         this.itemList = itemList;
         this.detailList = detailList;
-        //this.itemList = new ArrayList<>();
     }
 
     public HotelAdapter(MainActivity context) {
