@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/HotelBooking5/app/src/main/res/layout/hotel_item.xml" value="0.1644021739130435" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/HotelBooking5/app/src/main/res/layout/list_item_transaction.xml" value="0.1644021739130435" />
         <entry key="..\:/Users/Shu Hui/.gradle/caches/transforms-3/7d0b10e57e8c490b7e2d1f89a39dc698/transformed/material-1.6.0/res/drawable/design_snackbar_background.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.2109375" />
         <entry key="..\:/Users/Shu Hui/AndroidStudioProjects/HotelBooking/app/src/main/res/drawable/book_button_bg.xml" value="0.26614583333333336" />

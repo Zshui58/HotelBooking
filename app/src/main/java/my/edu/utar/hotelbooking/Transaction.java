@@ -15,7 +15,7 @@ public class Transaction implements Serializable {
     private Date paymentDate;
     private String checkIn;
     private String checkOut;
-    private double amount;
+    private double grandTotal;
 
     public Transaction() {
         // Default constructor
@@ -111,12 +111,12 @@ public class Transaction implements Serializable {
         this.checkOut = checkOut;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getgrandTotal() {
+        return grandTotal;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setgrandTotal(double grandTotal) {
+        this.grandTotal = grandTotal;
     }
 
     @Override
@@ -126,8 +126,9 @@ public class Transaction implements Serializable {
                 ", transactionId='" + transactionId + '\'' +
                 ", checkIn='" + checkIn + '\'' +
                 ", checkOut='" + checkOut + '\'' +
-                ", amount=" + amount +
+                ", amount=" + grandTotal +
                 ", paymentStatus=" + paymentStatus +
                 '}';
     }
+
 }

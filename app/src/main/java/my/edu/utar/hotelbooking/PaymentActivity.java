@@ -33,6 +33,7 @@ public class PaymentActivity extends Activity {
     private List<Transaction> transactionHistory = new ArrayList<>();
     private String checkInDate;
     private String checkOutDate;
+    private double grandTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class PaymentActivity extends Activity {
         if (intentReceive != null) {
             checkInDate = intentReceive.getStringExtra("checkInDate");
             checkOutDate = intentReceive.getStringExtra("checkOutDate");
+            grandTotal = intentReceive.getDoubleExtra("grandTotal", 0.0);
         }
 
         btnExit.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +71,7 @@ public class PaymentActivity extends Activity {
         editExpiration.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Not used
+
             }
 
             @Override
@@ -90,7 +92,7 @@ public class PaymentActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                // Not used
+
             }
         });
 
@@ -121,9 +123,11 @@ public class PaymentActivity extends Activity {
 
                 // Pass the transactionHistory list and the previous activity data to the TransactionCheckingActivity
                 intent.putExtra("transactionChecking", (Serializable) transactionHistory);
-//                intent.putExtra("selectedRoomType", selectedRoomType);
                 intent.putExtra("checkInDate", checkInDate);
                 intent.putExtra("checkOutDate", checkOutDate);
+                intent.putExtra("grandTotal", grandTotal);
+
+
 
                 // Start the TransactionCheckingActivity
                 startActivity(intent);

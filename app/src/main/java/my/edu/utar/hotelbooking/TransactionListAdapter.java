@@ -49,16 +49,13 @@ public class TransactionListAdapter extends ArrayAdapter<Transaction> {
             transactionIdTextView.setText("Transaction ID: " + transaction.getTransactionId());
             checkInTextView.setText("Check-In: " + transaction.getCheckIn());
             checkOutTextView.setText("Check-Out: " + transaction.getCheckOut());
-            amountTextView.setText("Amount: " + transaction.getAmount());
+            amountTextView.setText("Grand Total: " + transaction.getgrandTotal());
             statusTextView.setText("Status: " + (transaction.isPaymentStatus() ? "Paid" : "Unpaid"));
 
             // Handle cancel button click
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Show a confirmation dialog for cancellation
-                    showConfirmationDialog(position);
-                    Context context = v.getContext();
 
                     Intent intent = new Intent(context, CancelBooking.class);
                     context.startActivity(intent);
@@ -67,41 +64,5 @@ public class TransactionListAdapter extends ArrayAdapter<Transaction> {
         }
 
         return convertView;
-    }
-
-    private void showConfirmationDialog(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Cancel Booking");
-        builder.setMessage("Are you sure you want to cancel this booking?");
-
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // User confirmed cancellation, handle cancellation logic here
-
-                // Remove the transaction from the list
-                transactions.remove(position);
-
-                // Notify the adapter that the data set has changed
-                notifyDataSetChanged();
-
-                // Dismiss the dialog
-                dialog.dismiss();
-
-                // Show a confirmation message
-                Toast.makeText(context, "Booking cancelled.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // User canceled the confirmation dialog, do nothing
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 }

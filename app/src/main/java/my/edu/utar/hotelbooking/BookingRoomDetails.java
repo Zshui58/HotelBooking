@@ -49,6 +49,7 @@ public class BookingRoomDetails extends AppCompatActivity {
     private EditText numberOfNightsEditText;
     String numRooms;
     String numNights;
+    private double grandTotal;
 
 
     @Override
@@ -101,6 +102,8 @@ public class BookingRoomDetails extends AppCompatActivity {
                 values.put(DatabaseHelper.COLUMN_NUM_CHILDREN, Integer.parseInt(childrenSpinner.getSelectedItem().toString()));
                 values.put(COLUMN_NUM_ROOMS, numRooms);
                 values.put(COLUMN_NUM_NIGHTS, numNights);
+
+
 
 
 
@@ -324,6 +327,7 @@ public class BookingRoomDetails extends AppCompatActivity {
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Create an explicit intent to start the PaymentActivity
                 Intent transactionIntent = new Intent(BookingRoomDetails.this, PaymentActivity.class);
 
@@ -333,6 +337,9 @@ public class BookingRoomDetails extends AppCompatActivity {
                 //transactionIntent.putExtra("selectedRoomType", selectedRoomType);
                 transactionIntent.putExtra("checkInDate", arrivalDateButton.getText().toString());
                 transactionIntent.putExtra("checkOutDate", departureDateButton.getText().toString());
+                transactionIntent.putExtra("grandTotal", grandTotal);
+
+
 
                 // Start the PaymentActivity
                 startActivity(transactionIntent);
@@ -400,7 +407,7 @@ public class BookingRoomDetails extends AppCompatActivity {
         double adminFee = 40;
 
         // Calculate the grand total
-        double grandTotal= 0;
+        grandTotal= 0;
         grandTotal = totalRoomCost + adminFee;
 
         // Format and update the TextViews with the calculated values

@@ -51,6 +51,6 @@
         android:layout_gravity="end"
         android:text="Cancel Booking"
         android:textColor="#000000"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/text_border"
         android:contentDescription="@string/cancel" />
 </LinearLayout>
