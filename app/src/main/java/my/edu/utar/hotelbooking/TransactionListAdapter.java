@@ -1,6 +1,7 @@
 package my.edu.utar.hotelbooking;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,10 @@ public class TransactionListAdapter extends ArrayAdapter<Transaction> {
                 public void onClick(View v) {
                     // Show a confirmation dialog for cancellation
                     showConfirmationDialog(position);
+                    Context context = v.getContext();
+
+                    Intent intent = new Intent(context, CancelBooking.class);
+                    context.startActivity(intent);
                 }
             });
         }

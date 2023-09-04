@@ -1,207 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Booking Details"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="start"/>
-
-
-    <!-- Arrival and Departure Info -->
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <!-- Arrival Section -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <!-- Arrival Statement -->
-            <TextView
-                android:id="@+id/arrivalStatement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Arrival:"
-                android:textStyle="bold"
-                android:layout_alignParentStart="true"/>
-
-            <!-- Arrival Button -->
-            <Button
-                android:id="@+id/arrivalDateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Choose Arrival Date"
-                android:layout_below="@+id/arrivalStatement"
-                android:layout_alignParentStart="true"/>
-        </RelativeLayout>
-
-        <!-- Departure Section -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <!-- Departure Statement -->
-            <TextView
-                android:id="@+id/departureStatement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Departure:"
-                android:textStyle="bold"
-                android:layout_alignParentStart="true"/>
-
-            <!-- Departure Button -->
-            <Button
-                android:id="@+id/departureDateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Choose Departure Date"
-                android:layout_below="@+id/departureStatement"
-                android:layout_alignParentStart="true"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-
-    <!-- Hotel Details -->
-    <TextView
-        android:id="@+id/hotelNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hotel Name:"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:id="@+id/hotelAddressTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hotel Address:"
-        android:textStyle="bold"/>
-
-    <!-- ... More UI elements for Hotel Details ... -->
-
-    <!-- Participants -->
-    <TextView
-        android:id="@+id/participantsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Participants:"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"/>
-
-    <!-- Spinner for Adults -->
-    <TextView
-        android:id="@+id/adultsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Adults:"
-        android:layout_marginTop="8dp"/>
-
-    <Spinner
-        android:id="@+id/adultsSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"/>
-
-    <!-- Spinner for Children -->
-    <TextView
-        android:id="@+id/childrenLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Children:"
-        android:layout_marginTop="8dp"/>
-
-    <Spinner
-        android:id="@+id/childrenSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"/>
-    <!-- ... More UI elements for Participants ... -->
-
-    <!-- Room Type Details and Price -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <!-- Room Type TextView -->
         <TextView
-            android:id="@+id/roomTypeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Room Type:"
+            android:text="Booking Details"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="start"/>
 
-        <!-- Room Type Spinner -->
+
+        <!-- Arrival and Departure Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Arrival Section -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <!-- Arrival Statement -->
+                <TextView
+                    android:id="@+id/arrivalStatement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Arrival:"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"/>
+
+                <!-- Arrival Button -->
+                <Button
+                    android:id="@+id/arrivalDateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose Arrival Date"
+                    android:layout_below="@+id/arrivalStatement"
+                    android:layout_alignParentStart="true"/>
+            </RelativeLayout>
+
+            <!-- Departure Section -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <!-- Departure Statement -->
+                <TextView
+                    android:id="@+id/departureStatement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Departure:"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"/>
+
+                <!-- Departure Button -->
+                <Button
+                    android:id="@+id/departureDateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose Departure Date"
+                    android:layout_below="@+id/departureStatement"
+                    android:layout_alignParentStart="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <!-- Hotel Details -->
+        <TextView
+            android:id="@+id/hotelNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hotel Name:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/hotelAddressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hotel Address:"
+            android:textStyle="bold"/>
+
+        <!-- ... More UI elements for Hotel Details ... -->
+
+        <!-- Participants -->
+        <TextView
+            android:id="@+id/participantsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Participants:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Spinner for Adults -->
+        <TextView
+            android:id="@+id/adultsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adults:"
+            android:layout_marginTop="8dp"/>
+
         <Spinner
-            android:id="@+id/roomTypeSpinner"
+            android:id="@+id/adultsSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_marginTop="8dp"/>
 
-
-        <!-- Room Price TextView -->
+        <!-- Spinner for Children -->
         <TextView
-            android:id="@+id/roomPriceTextView"
+            android:id="@+id/childrenLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="8dp"
-            android:text=""
-            android:textStyle="bold" />
+            android:text="Children:"
+            android:layout_marginTop="8dp"/>
 
-        <TextView
-            android:id="@+id/roomTypeTextView"
+        <Spinner
+            android:id="@+id/childrenSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginTop="8dp"/>
+        <!-- ... More UI elements for Participants ... -->
+
+        <!-- Room Type Details and Price -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <!-- Room Type TextView -->
+            <TextView
+                android:id="@+id/roomTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Room Type:"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical" />
+
+            <!-- Room Type Spinner -->
+            <Spinner
+                android:id="@+id/roomTypeSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical" />
+
+
+            <!-- Room Price TextView -->
+            <TextView
+                android:id="@+id/roomPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text=""
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/roomTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+        <!-- ... More UI elements for Room Type Details and Price ... -->
+
+        <!-- Number of Nights -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Nights:"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/numberOfNightsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Enter number of nights"/>
+
+        <!-- Number of Rooms -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Rooms:"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/numberOfRoomsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Enter number of rooms"/>
+
+        <!-- Proceed to Book button-->
+
+        <Button
+            android:id="@+id/bookNowButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Now"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:onClick="onBookNowClick"
+            />
+
+
+        <!-- Payment Summary -->
+        <TextView
+            android:id="@+id/paymentSummaryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment Summary"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/roomTypeSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Room Type: "
+                android:textSize="16sp" />
+
+            <!-- Number of Rooms -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/numRoomsSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Number of Rooms: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/numberOfRoomsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+            <!-- Number of Nights -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/numNightsSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Number of Nights: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/numberOfNightsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+            <!-- Administration Fee -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Administration Fee:"
+                    android:textSize="16sp"
+                    android:layout_alignParentStart="true"/>
+
+                <TextView
+                    android:id="@+id/adminFeeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RM40.00"
+                    android:textSize="16sp"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+            <!-- Total -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/totalSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/totalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RM0.00"
+                    android:textSize="18sp"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <!-- ... More UI elements for Payment Summary ... -->
+
+
+        <!-- Proceed to Payment Button -->
+        <Button
+            android:id="@+id/payButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pay Now"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:layout_gravity="center_horizontal"/>
+
     </LinearLayout>
-    <!-- ... More UI elements for Room Type Details and Price ... -->
-
-    <!-- Payment Summary -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Payment Summary"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"/>
-
-    <!-- ... More UI elements for Payment Summary ... -->
-
-    <!-- Proceed to Payment Button -->
-    <Button
-        android:id="@+id/payButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pay Now"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:padding="12dp"
-        android:layout_gravity="center_horizontal"/>
-
-
-
-
-</LinearLayout>
+</ScrollView>

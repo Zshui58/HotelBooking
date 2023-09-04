@@ -5,13 +5,22 @@ public class HotelData {
     public static Hotel getSelectedHotel() {
         // Simulated hotel data
         Hotel hotel = new Hotel();
+        hotel.setName("The Platinum Kuala Lumpur by Cozy White");
+        hotel.setAddress("1020 Jalan Sultan Ismail D-15-07, 50250 Kuala Lumpur, Malaysia");
+        // Add more hotel data as needed
+        return hotel;
+    }
+
+    public static Hotel getSelectedHotel1() {
+        // Simulated hotel data
+        Hotel hotel = new Hotel();
         hotel.setName("The START Hotel, Casino & SkyPod");
         hotel.setAddress("2000 Las Vegas Blvd S, Las Vegas, NV 89104, United States");
         // Add more hotel data as needed
         return hotel;
     }
 
-    public static Hotel getSelectedHotel1() {
+    public static Hotel getSelectedHotel2() {
         // Simulated hotel data
         Hotel hotel = new Hotel();
         hotel.setName("Sunway Putra Hotel Kuala Lumpur");

@@ -1,8 +1,10 @@
 package my.edu.utar.hotelbooking;
 
+import android.content.Intent;
+
 import java.util.Random;
 
-public class BookingIDGenerator {
+public class BookingIDGenerator<cancelBookingIntent> {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int ID_LENGTH = 8;
 

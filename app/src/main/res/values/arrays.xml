@@ -12,4 +12,14 @@
             <!-- Add more room type options as needed -->
         </array>
 
+        <array name="room_prices">
+            <item>166.0</item>
+            <item>340.0</item>
+            <item>328.0</item>
+            <item>448.0</item>
+            <item>999.0</item>
+            <item>1388.0</item>
+            <item>1688.0</item>
+            <item>1888.0</item>
+        </array>
 </resources>

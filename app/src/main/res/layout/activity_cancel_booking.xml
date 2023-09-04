@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Statement with bold text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please select a reason"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+
+    <!-- Options for the user to choose -->
+    <RadioGroup
+        android:id="@+id/reasonRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/reason_option1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dates Change" />
+
+        <RadioButton
+            android:id="@+id/reason_option2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Details Change" />
+
+        <RadioButton
+            android:id="@+id/reason_option3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No longer need" />
+
+        <RadioButton
+            android:id="@+id/reason_option4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others" />
+
+        <!-- Add more options as needed -->
+    </RadioGroup>
+
+    <!-- Line to separate sections -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#000" />
+
+    <!-- Subtitle with bold text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refund"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+
+    <!-- Room and price section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - Full refund"
+            android:textSize="14sp"
+            android:textColor="#00A000" /> <!-- Green text for full refund -->
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" /> <!-- To create space between text and price -->
+
+    </LinearLayout>
+
+    <!-- Taxes and price section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Taxes"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - Full refund"
+            android:textSize="14sp"
+            android:textColor="#00A000" /> <!-- Green text for full refund -->
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" /> <!-- To create space between text and price -->
+
+    </LinearLayout>
+
+    <!-- Line to separate sections -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#000" />
+
+    <!-- Total eligible refund with bold text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total eligible refund"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+
+    <!-- Price for total eligible refund -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total price"
+        android:textSize="16sp" />
+
+    <!-- "Yes, cancel" button at the bottom right -->
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Yes, cancel" />
+
+</LinearLayout>
