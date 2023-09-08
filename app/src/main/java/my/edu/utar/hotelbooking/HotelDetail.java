@@ -117,6 +117,8 @@ public class HotelDetail implements Parcelable {
         dest.writeInt(imageResId2);
         dest.writeInt(imageResId3);
         dest.writeInt(imageResId4);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
     }
 
     public static final Parcelable.Creator<HotelDetail> CREATOR = new Parcelable.Creator<HotelDetail>() {
@@ -140,6 +142,8 @@ public class HotelDetail implements Parcelable {
         imageResId2 = in.readInt();
         imageResId3 = in.readInt();
         imageResId4 = in.readInt();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
     }
 
 

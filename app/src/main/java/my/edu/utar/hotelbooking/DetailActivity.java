@@ -35,6 +35,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private List<HotelDetail> detailList;
     private GoogleMap googleMap;
     private MapView mapView;
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
         detailList = intent.getParcelableArrayListExtra("detailList");
         selectedItemIndex = intent.getIntExtra("selectedItemIndex", -1);
-        mapView = findViewById(R.id.mapView);
-        mapView. onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
 
         if (selectedItemIndex != -1 && detailList != null && selectedItemIndex < detailList.size()) {
             selectedHotelDetail = detailList.get(selectedItemIndex);
@@ -61,6 +60,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             ImageView imageView8 = findViewById(R.id.imageView8);
             ImageView imageView9 = findViewById(R.id.imageView9);
             ImageView imageView10 = findViewById(R.id.imageView10);
+            latitude = selectedHotelDetail.getLatitude();
+            longitude = selectedHotelDetail.getLongitude();
+            Log.d("DetailActivity", "Latitude: " + latitude + ", Longitude: " + longitude);
 
             // Populate views with data
             imageView.setImageResource(selectedHotelDetail.getImageResId1());
@@ -73,6 +75,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             sumDetail.setText(selectedHotelDetail.getSummary());
             reviewTextView.setText(selectedHotelDetail.getReview());
         }
+
+        mapView = findViewById(R.id.mapView);
+        mapView. onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
 
         ImageView backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -111,10 +117,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap map) {
         googleMap = map;
 
-        // Retrieve the latitude and longitude from the selectedHotelDetail
-        double latitude = selectedHotelDetail.getLatitude();
-        double longitude = selectedHotelDetail.getLongitude();
-
         // Create a LatLng object with the retrieved coordinates
         LatLng locationLatLng = new LatLng(latitude, longitude);
 
@@ -124,6 +126,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         // Move the camera to the marker's position
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 15)); // You can adjust the zoom level as needed
     }
+
     @Override
     protected void onResume() {
         super.onResume();
