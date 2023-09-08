@@ -21,6 +21,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,11 +48,13 @@ public class MainActivity extends AppCompatActivity implements
     Button buttonStart;
     Button buttonEnd;
     RecyclerView recyclerView;
+    private RecyclerView wishlistRecyclerView;
     FirebaseAuth auth;
     Button btn;
     FirebaseUser user;
     List<HotelItem> itemList = new ArrayList<>();
     List<HotelDetail>detailList=new ArrayList<>();
+    List<HotelDetail> selectedItems = new ArrayList<>();
     HotelAddedCallback callback;
     private HotelAdapter hotelAdapter;
     FirebaseHelper firebaseHelper;
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -73,10 +78,7 @@ public class MainActivity extends AppCompatActivity implements
         toggle.syncState();
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        // Initialize Firebase (you can also do this in your Application class)
         FirebaseApp.initializeApp(this);
-        // Initialize FirebaseHelper
         firebaseHelper = new FirebaseHelper();
 
         auth = FirebaseAuth.getInstance();
@@ -89,42 +91,65 @@ public class MainActivity extends AppCompatActivity implements
             finish();
         }
 
-        /*btn.setOnClickListener(new View.OnClickListener() {
+        String hotelTitle = "Mughal Gardens, Srinagar";
+        addHotelToDatabase(1, hotelTitle, 4.91F, 510, R.drawable.image_one, new HotelAddedCallback() {
             @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(MainActivity.this, Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });*/
-
-        searchView = findViewById(R.id.searchView);
-        recyclerView = findViewById(R.id.recyclerView);
-
-        // Handle search query changes in the SearchView
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText)) {
-                    // If the search query is empty, show all hotel items
-                    loadAllHotelItems();
-                } else {
-                    // Filter the hotel items and details based on the search query
-                    Pair<List<HotelItem>, List<HotelDetail>> filteredLists = filterHotels(itemList, detailList, newText);
-
-                    // Update the adapter with the filtered lists
-                    hotelAdapter.setItemList(filteredLists.first);
-                    hotelAdapter.setDetailList(filteredLists.second);
-                }
-                return true;
+            public void onHotelAdded(String hotelId) {
+                addHotelDetailToDatabase(1, hotelId,hotelTitle,"4.91","RM200/night","Mughal Gardens which have truly changed the face of the Mughal Empire is one of the most popular and the most visited tourist attractions of Srinagar.","88 reviews",R.drawable.image_one,R.drawable.image_one, R.drawable.image_two, R.drawable.image_three,34.1504402354116, 74.87279684778184);
+                hotelAdapter.notifyDataSetChanged();
             }
         });
+
+        String hotelTitle1="Sunway Putra Hotel Kuala Lumpur";
+        addHotelToDatabase(2,hotelTitle1, 4.75F, 0, R.drawable.sunway1, new HotelAddedCallback() {
+            @Override
+            public void onHotelAdded(String hotelId) {
+                addHotelDetailToDatabase(2,hotelId,hotelTitle1,"4.75","RM340/night","Sunway Putra Hotel Kuala Lumpur is located opposite the World Trade Centre Kuala Lumpur (formerly known as PWTC),","34 reviews",R.drawable.sunway1,R.drawable.sunway2, R.drawable.sunway3, R.drawable.sunway4,3.166630851897795, 101.69241721596963);
+                hotelAdapter.notifyDataSetChanged();
+            }
+        });
+
+        String hotelTitle3="The Platinum Kuala Lumpur by Cozy White";
+        addHotelToDatabase(3,hotelTitle3, 4.80f, 28, R.drawable.klcc1, new HotelAddedCallback() {
+            @Override
+            public void onHotelAdded(String hotelId) {
+                addHotelDetailToDatabase(3,hotelId,hotelTitle3,"4.80","RM540/night","Set in Kuala Lumpur, 1.2 km from Petronas Twin Towers and 2 km from the centre, The Platinum Kuala Lumpur by Cozy White offers air-conditioned accommodation with free WiFi, and a rooftop pool.","28 reviews",R.drawable.klcc1,R.drawable.klcc2, R.drawable.klcc3, R.drawable.klcc4,3.1589032506998134, 101.70399049140613);
+                hotelAdapter.notifyDataSetChanged();
+            }
+        });
+
+        fetchAndPopulateData();
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        hotelAdapter = new HotelAdapter(this, itemList,detailList);
+        recyclerView.setAdapter(hotelAdapter);
+
+        searchView = findViewById(R.id.searchView);
+        if (searchView != null) {
+            // Handle search query changes in the SearchView
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (TextUtils.isEmpty(newText)) {
+                        // If the search query is empty, show all hotel items
+                        loadAllHotelItems();
+                    } else {
+                        // Filter the hotel items and details based on the search query
+                        Pair<List<HotelItem>, List<HotelDetail>> filteredLists = filterHotels(itemList, detailList, newText);
+
+                        // Update the adapter with the filtered lists
+                        hotelAdapter.setItemList(filteredLists.first);
+                        hotelAdapter.setDetailList(filteredLists.second);
+                    }
+                    return true;
+                }
+            });
+        }
 
         buttonStart = findViewById(R.id.startDateBt);
         buttonStart.setOnClickListener(new View.OnClickListener() {
@@ -143,42 +168,6 @@ public class MainActivity extends AppCompatActivity implements
                 datePicker.show(getSupportFragmentManager(), "end_date_picker");
             }
         });
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Initialize and set up the RecyclerView adapter
-        hotelAdapter = new HotelAdapter(this, itemList,detailList);
-
-
-        String hotelTitle = "Mughal Gardens, Srinagar";
-        addHotelToDatabase(hotelTitle, 4.91f, 510, R.drawable.image_one, new HotelAddedCallback() {
-            @Override
-            public void onHotelAdded(String hotelId) {
-                addHotelDetailToDatabase(hotelId,hotelTitle,"4.91","RM200/night","Mughal Gardens which have truly changed the face of the Mughal Empire is one of the most popular and the most visited tourist attractions of Srinagar.","88 reviews",R.drawable.image_one,R.drawable.image_one, R.drawable.image_two, R.drawable.image_three);
-                hotelAdapter.notifyDataSetChanged();
-            }
-        });
-
-        String hotelTitle1="Sunway Putra Hotel Kuala Lumpur";
-        addHotelToDatabase(hotelTitle1, 4.75f, 0, R.drawable.sunway1, new HotelAddedCallback() {
-            @Override
-            public void onHotelAdded(String hotelId) {
-                addHotelDetailToDatabase(hotelId,hotelTitle1,"4.75","RM340/night","Sunway Putra Hotel Kuala Lumpur is located opposite the World Trade Centre Kuala Lumpur (formerly known as PWTC),","34 reviews",R.drawable.sunway1,R.drawable.sunway2, R.drawable.sunway3, R.drawable.sunway4);
-                hotelAdapter.notifyDataSetChanged();
-            }
-        });
-
-        String hotelTitle3="The Platinum Kuala Lumpur by Cozy White";
-        addHotelToDatabase(hotelTitle3, 4.80f, 28, R.drawable.klcc1, new HotelAddedCallback() {
-            @Override
-            public void onHotelAdded(String hotelId) {
-                addHotelDetailToDatabase(hotelId,hotelTitle3,"4.80","RM540/night","Set in Kuala Lumpur, 1.2 km from Petronas Twin Towers and 2 km from the centre, The Platinum Kuala Lumpur by Cozy White offers air-conditioned accommodation with free WiFi, and a rooftop pool.","28 reviews",R.drawable.klcc1,R.drawable.klcc2, R.drawable.klcc3, R.drawable.klcc4);
-                hotelAdapter.notifyDataSetChanged();
-            }
-        });
-
-        fetchAndPopulateData();
-        recyclerView.setAdapter(hotelAdapter);
     }
 
     private void fetchAndPopulateData() {
@@ -211,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
-
 
     private void loadAllHotelItems() {
         // Populate the RecyclerView with all hotel items
@@ -256,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     // Method to add a new hotel item to the Firebase Realtime Database, checking for duplicates
-    public void addHotelToDatabase(String title, float rating, int price, int imageResId, HotelAddedCallback callback) {
+    public void addHotelToDatabase(int id,String title, Float rating, int price, int imageResId, HotelAddedCallback callback) {
         // Check if the hotel with the same title already exists in the database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelsReference = databaseReference.child("hotels");
@@ -270,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements
                     Toast.makeText(MainActivity.this, "Hotel already exists in the database", Toast.LENGTH_SHORT).show();
                 } else {
                     // The hotel does not exist, so add it to the database
-                    HotelItem hotel = new HotelItem(itemList.size() + 1, title, rating, price, imageResId);
+                    HotelItem hotel = new HotelItem(id, title, rating, price, imageResId);
 
                     String hotelId = hotelsReference.push().getKey();
                     hotelsReference.child(hotelId).child("list").setValue(hotel); // Set the data under "list"
@@ -290,12 +278,12 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
-    private void addHotelDetailToDatabase(String hotelId, String title, String rate, String price,String summary,String review, int imageResource1,int imageResource2,int imageResource3,int imageResource4) {
+    private void addHotelDetailToDatabase(int id, String hotelId, String title, String rate, String price, String summary, String review, int imageResource1, int imageResource2, int imageResource3, int imageResource4, double latitude, double longitude) {
         // Check if the hotel with the same title already exists in the database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference hotelsReference = databaseReference.child("hotels");
 
-        HotelDetail hotelDetail = new HotelDetail(detailList.size() + 1, title, rate, price, summary,review,imageResource1,imageResource2,imageResource3,imageResource4);
+        HotelDetail hotelDetail = new HotelDetail(id, title, rate, price, summary,review,imageResource1,imageResource2,imageResource3,imageResource4,latitude,longitude);
 
         hotelsReference.child(hotelId).child("information").setValue(hotelDetail);
 

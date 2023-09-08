@@ -3,14 +3,12 @@ package my.edu.utar.hotelbooking;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.android.gms.maps.GoogleMap;
+
 public class HotelDetail implements Parcelable {
 
     private int id;
     private String title;
-
-    public HotelDetail() {
-    }
-
     private String price;
     private String review;
     private String rate;
@@ -19,8 +17,13 @@ public class HotelDetail implements Parcelable {
     private int imageResId2;
     private int imageResId3;
     private int imageResId4;
+    private boolean isAddedToWishList;
+    private double latitude;
+    private  double longitude;
 
-    public HotelDetail(int id, String title, String rate, String price, String summary, String review, int imageResId1, int imageResId2, int imageResId3, int imageResId4) {
+
+
+    public HotelDetail(int id, String title, String rate, String price, String summary, String review, int imageResId1, int imageResId2, int imageResId3, int imageResId4, double latitude, double longitude) {
         this.id = id;
         this.title=title;
         this.rate=rate;
@@ -31,9 +34,18 @@ public class HotelDetail implements Parcelable {
         this.imageResId2 = imageResId2;
         this.imageResId3 = imageResId3;
         this.imageResId4 = imageResId4;
+        this.latitude=latitude;
+        this.longitude=longitude;
 
     }
 
+    public HotelDetail() {
+    }
+
+
+    public int getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;
@@ -70,6 +82,23 @@ public class HotelDetail implements Parcelable {
     public int getImageResId4() {
         return imageResId4;
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
 
     @Override
     public int describeContents() {
@@ -112,4 +141,6 @@ public class HotelDetail implements Parcelable {
         imageResId3 = in.readInt();
         imageResId4 = in.readInt();
     }
+
+
 }
