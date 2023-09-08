@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+         <string-array name="hotels">
+            <item>The Platinum Kuala Lumpur by Cozy White</item>
+            <item>Mughal Gardens, Srinagar</item>
+             <item>Sunway Putra Hotel Kuala Lumpur</item>
+            <!-- Add more hotel names as needed -->
+        </string-array>
+
+
         <array name="room_types">
             <item>Standard Single Room</item>
             <item>Standard Double Room</item>
             <item>Deluxe Twin</item>
             <item>Deluxe Family</item>
-            <item>Executive Suite</item>
-            <item>Superior Suite</item>
-            <item>Deluxe Suite</item>
-            <item>Premier Suite</item>
             <!-- Add more room type options as needed -->
         </array>
 
-        <array name="room_prices">
-            <item>166.0</item>
-            <item>340.0</item>
-            <item>328.0</item>
-            <item>448.0</item>
-            <item>999.0</item>
-            <item>1388.0</item>
-            <item>1688.0</item>
-            <item>1888.0</item>
-        </array>
 </resources>

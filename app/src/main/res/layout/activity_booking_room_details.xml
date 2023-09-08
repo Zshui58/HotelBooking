@@ -96,6 +96,14 @@
             android:text="Hotel Address:"
             android:textStyle="bold"/>
 
+        <Spinner
+            android:id="@+id/hotelSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!-- other attributes -->
+        />
+
+
         <!-- ... More UI elements for Hotel Details ... -->
 
         <!-- Participants -->

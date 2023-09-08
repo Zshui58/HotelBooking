@@ -7,24 +7,50 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CancelBooking extends AppCompatActivity {
 
     private Button cancelButton;
     private RadioGroup reasonRadioGroup;
+    private TextView totalEligiblePriceTextView;
+    double grandTotal;
+
+    private double roomPrice; // Room price from the booking details
+    private double taxes = 50.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancel_booking);
 
+        TextView refundRoom = findViewById(R.id.totalRoomPrices);
+
+        // Retrieve the grandTotal from the intent extras
+        Intent intent = getIntent();
+        double[] roomPrices = getIntent().getDoubleArrayExtra("roomPrices");
+        if (intent != null) {
+            grandTotal = intent.getDoubleExtra("grandTotal",0.0);
+
+        }
+        String strGrandTotal = Double.toString(grandTotal);
+        refundRoom.setText(strGrandTotal);
+
         // Initialize UI elements
         cancelButton = findViewById(R.id.cancelButton);
         reasonRadioGroup = findViewById(R.id.reasonRadioGroup);
+        totalEligiblePriceTextView = findViewById(R.id.totalPriceTextView);
 
         // Initially, disable the "Yes, cancel" button
         cancelButton.setEnabled(false);
+
+        // Retrieve booking data from the previous activity (e.g., BookingRoomDetails)
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            roomPrice = extras.getDouble("roomPrice"); // Replace with your actual key
+        }
 
         // Set a click listener for the "Cancel" button
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +69,18 @@ public class CancelBooking extends AppCompatActivity {
                 cancelButton.setEnabled(checkedId != -1);
             }
         });
+
+        // Calculate and display the total eligible price
+        calculateTotalEligiblePrice();
+    }
+
+    // Method to calculate and display the total eligible price
+    private void calculateTotalEligiblePrice() {
+        double totalEligiblePrice = grandTotal - taxes;
+        // You can add more fees or deductions here as needed
+
+        // Display the total eligible price to the user
+        totalEligiblePriceTextView.setText("RM " + totalEligiblePrice);
     }
 
     // Method to show the confirmation dialog

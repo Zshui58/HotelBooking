@@ -15,5 +15,6 @@ public class FirebaseHelper {
         // Attach a ValueEventListener to retrieve all hotels
         databaseReference.addValueEventListener(valueEventListener);
     }
+
 }
 

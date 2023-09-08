@@ -76,19 +76,31 @@
             android:text="Room"
             android:textStyle="bold"
             android:textSize="16sp" />
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" - Full refund"
-            android:textSize="14sp"
-            android:textColor="#00A000" /> <!-- Green text for full refund -->
+            android:text="(Full refund)"
+            android:textColor="#00A000"
+            android:textSize="16sp" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" /> <!-- To create space between text and price -->
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/totalRoomPrices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:layout_gravity="end"
+        android:textSize="14sp" /> <!-- Green text for full refund -->
 
     </LinearLayout>
+
+
 
     <!-- Taxes and price section -->
     <LinearLayout
@@ -106,16 +118,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" - Full refund"
-            android:textSize="14sp"
-            android:textColor="#00A000" /> <!-- Green text for full refund -->
+            android:text="(Full refund)"
+            android:textColor="#00A000"
+            android:textSize="16sp"/>
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" /> <!-- To create space between text and price -->
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RM50"
+        android:layout_gravity="end"
+        android:textSize="14sp" /> <!-- Green text for full refund -->
 
     </LinearLayout>
+
 
     <!-- Line to separate sections -->
     <View
@@ -135,9 +155,11 @@
 
     <!-- Price for total eligible refund -->
     <TextView
+        android:id="@+id/totalPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total price"
+        android:text="Full refund"
+        android:layout_gravity="end"
         android:textSize="16sp" />
 
     <!-- "Yes, cancel" button at the bottom right -->

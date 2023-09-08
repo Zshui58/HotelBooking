@@ -2,6 +2,12 @@ package my.edu.utar.hotelbooking;
 
 public class HotelData {
 
+    private static Hotel selectedHotel; // To store the selected hotel
+    // Define arrays to store room prices based on hotels
+    public static final double[] hotel1RoomPrices = {166.0, 340.0, 428.0, 540.0};
+    public static final double[] hotel2RoomPrices = {200.0, 340.0, 450.0, 550.0};
+    public static final double[] hotel3RoomPrices = {340.0, 450.0, 560.0, 740.0};
+
     public static Hotel getSelectedHotel() {
         // Simulated hotel data
         Hotel hotel = new Hotel();
@@ -13,27 +19,28 @@ public class HotelData {
 
     public static Hotel getSelectedHotel1() {
         // Simulated hotel data
-        Hotel hotel = new Hotel();
-        hotel.setName("The START Hotel, Casino & SkyPod");
-        hotel.setAddress("2000 Las Vegas Blvd S, Las Vegas, NV 89104, United States");
+        Hotel hotel1 = new Hotel();
+        hotel1.setName("Mughal Gardens, Srinagar");
+        hotel1.setAddress("2000 Las Vegas Blvd S, Las Vegas, NV 89104, United States");
         // Add more hotel data as needed
-        return hotel;
+        return hotel1;
     }
 
     public static Hotel getSelectedHotel2() {
         // Simulated hotel data
-        Hotel hotel = new Hotel();
-        hotel.setName("Sunway Putra Hotel Kuala Lumpur");
-        hotel.setAddress("100, Jalan Putra, Chow Kit, 50350 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur");
+        Hotel hotel2 = new Hotel();
+        hotel2.setName("Sunway Putra Hotel Kuala Lumpur");
+        hotel2.setAddress("100, Jalan Putra, Chow Kit, 50350 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur");
         // Add more hotel data as needed
-        return hotel;
+        return hotel2;
     }
+
 }
 
 class Hotel {
     private String name;
     private String address;
-    // Add more hotel attributes as needed
+
 
     public String getName() {
         return name;

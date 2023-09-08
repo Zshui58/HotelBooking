@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -58,6 +55,7 @@ public class TransactionListAdapter extends ArrayAdapter<Transaction> {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(context, CancelBooking.class);
+                    intent.putExtra("grandTotal",transaction.getgrandTotal());
                     context.startActivity(intent);
                 }
             });

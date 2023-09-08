@@ -1,20 +1,25 @@
 package my.edu.utar.hotelbooking;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity  {
+
+    private HotelAdapter hotelAdapter;
+    private HotelDetail selectedHotelDetail;
+    private HotelItem selectedHotelItem;
+    private int selectedItemIndex;
+    private List<HotelItem> itemList;
+    private List<HotelDetail> detailList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +28,13 @@ public class DetailActivity extends AppCompatActivity {
 
         // Retrieve data passed from MainActivity
         Intent intent = getIntent();
-        //int hotelItemId = intent.getIntExtra("hotelItemId", -1); // Replace with the actual data type
-        int selectedItemIndex = intent.getIntExtra("selectedItemIndex", -1);
-        ArrayList<HotelDetail> detailList = intent.getParcelableArrayListExtra("detailList");
+
+        detailList = intent.getParcelableArrayListExtra("detailList");
+        selectedItemIndex = intent.getIntExtra("selectedItemIndex", -1);
+
 
         if (selectedItemIndex != -1 && detailList != null && selectedItemIndex < detailList.size()) {
-            HotelDetail selectedHotelDetail = detailList.get(selectedItemIndex);
+            selectedHotelDetail = detailList.get(selectedItemIndex);
             ImageView imageView = findViewById(R.id.imageView3);
             TextView titleTextView = findViewById(R.id.textTitle);
             TextView priceTextView = findViewById(R.id.textPrice);
@@ -52,7 +58,6 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         ImageView backButton = findViewById(R.id.back);
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +69,7 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         //
-        TextView reviewTextView=findViewById(R.id.review);
+        TextView reviewTextView = findViewById(R.id.review);
         reviewTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,11 +85,13 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Navigate to the booking page
                 Intent bookingIntent = new Intent(DetailActivity.this, BookingRoomDetails.class);
+                bookingIntent.putExtra("selectedIndex",selectedItemIndex);
                 startActivity(bookingIntent);
             }
         });
-
     }
+
+
 }
 
 
