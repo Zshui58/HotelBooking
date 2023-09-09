@@ -149,13 +149,21 @@
             android:layout_toEndOf="@id/imageView9"
             app:srcCompat="@drawable/image_three" />
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/imageView8"
+            android:layout_marginTop="10dp"
+            app:liteMode="true" />
+
         <ImageView
             android:id="@+id/imageLike"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:layout_below="@id/imageView10"
+            android:layout_below="@id/mapView"
             android:layout_marginTop="20dp"
             app:srcCompat="@drawable/like" />
 
@@ -163,15 +171,15 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_below="@id/mapView"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@id/imageLike"
             android:background="@color/blue"
             android:fontFamily="@font/open_sans_bold"
             android:text="Start Booking Your Trip"
-            android:textColor="#FFFFFF"
-            android:layout_below="@id/imageView10"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@id/imageLike"/>
+            android:textColor="#FFFFFF" />
 
 
     </RelativeLayout>

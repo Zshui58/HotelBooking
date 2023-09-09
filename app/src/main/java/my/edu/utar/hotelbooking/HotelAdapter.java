@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
+
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> {
 
@@ -28,7 +30,8 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
         this.detailList = detailList;
     }
 
-    public HotelAdapter(MainActivity context) {
+    public HotelAdapter() {
+
     }
 
     @NonNull
@@ -42,6 +45,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HotelItem item = itemList.get(position);
         holder.bind(item); // Pass the HotelItem to the ViewHolder to set data
+
     }
 
     @Override
@@ -63,6 +67,11 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     public List<HotelItem> getItemList() {
         return itemList;
     }
+
+    public int getId() {
+        return 0;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -91,29 +100,29 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
 
                         // Create an intent to start the DetailActivity
                         Intent detailIntent = new Intent(context, DetailActivity.class);
-
-                        // Pass the item's identifier to DetailActivity
-                        detailIntent.putExtra("hotelItemId", clickedItem.getId());
-
-                        // Pass the detailList and selectedItemIndex
                         detailIntent.putParcelableArrayListExtra("detailList", new ArrayList<>(detailList));
                         detailIntent.putExtra("selectedItemIndex", position);  // Pass the selected item index
 
-                        // Start the detail activity
                         context.startActivity(detailIntent);
+
                     }
+
                 }
             });
         }
 
         public void bind(HotelItem item) {
             if (item != null) {
-                titleTextView.setText(item.getTitle());
-                ratingBar.setRating(item.getRating());
-                ratingTextView.setText(String.valueOf(item.getRating()));
-                reviewCountTextView.setText("(" + item.getReviewCount() + ")");
-                imageView.setImageResource(item.getImageResId());
+                if (item instanceof HotelItem) {
+                    HotelItem hotelItem = (HotelItem) item;
+                    titleTextView.setText(item.getTitle());
+                    ratingBar.setRating(item.getRating());
+                    ratingTextView.setText(String.valueOf(item.getRating()));
+                    reviewCountTextView.setText("(" + item.getReviewCount() + ")");
+                    imageView.setImageResource(item.getImageResId());
+                }
             }
+
         }
 
 
