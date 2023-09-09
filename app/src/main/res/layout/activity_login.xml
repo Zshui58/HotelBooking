@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:padding="15dp"
     tools:context=".Login">
 
+    <!-- TextView -->
     <TextView
+        android:id="@+id/textViewLogin"
         android:text="@string/login"
         android:textSize="25sp"
         android:textStyle="bold"
         android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <!-- Email TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailLayout"
+        android:layout_below="@id/textViewLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,7 +34,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Password TextInputLayout -->
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
+        android:layout_below="@id/emailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -38,26 +49,95 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- ProgressBar -->
     <ProgressBar
         android:id="@+id/progressBar"
+        android:layout_below="@id/passwordLayout"
+        android:layout_centerHorizontal="true"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <!-- Login Button -->
     <Button
         android:id="@+id/btn_login"
         android:text="@string/login"
+        android:layout_below="@id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rlHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/btn_login">
+
+        <!-- Left Horizontal Line -->
+        <View
+            android:id="@+id/horizontalLineLeft"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/textViewOr"
+            android:background="#000"/> <!-- Adjust background color as needed -->
+
+        <!-- "or" Text -->
+        <TextView
+            android:id="@+id/textViewOr"
+            android:text="or"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- Right Horizontal Line -->
+        <View
+            android:id="@+id/horizontalLineRight"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/textViewOr"
+            android:background="#000"/> <!-- Adjust background color as needed -->
+    </RelativeLayout>
+
+    <!-- Sign in with Google Button -->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleAuth"
+        android:layout_below="@id/rlHorizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:id="@+id/textViewNoAccount"
+        android:text="No Account?"
+        android:textSize="18sp"
         android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/googleAuth"
         android:layout_marginTop="20dp"
-        android:id="@+id/registerNow"
-        android:text="@string/click_to_register"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-</LinearLayout>
+    <!-- "Register Now" TextView with underline -->
+    <TextView
+        android:id="@+id/registerNow"
+        android:text="Register Now"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_below="@id/googleAuth"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_toRightOf="@+id/textViewNoAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#0000FF"
+        android:textStyle="normal"/>
+
+
+</RelativeLayout>
