@@ -36,7 +36,7 @@ public class CancelBooking extends AppCompatActivity {
 
         }
         String strGrandTotal = Double.toString(grandTotal);
-        refundRoom.setText(strGrandTotal);
+        refundRoom.setText("RM"+strGrandTotal);
 
         // Initialize UI elements
         cancelButton = findViewById(R.id.cancelButton);

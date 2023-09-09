@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (dataSnapshot.exists()) {
                     // A hotel with the same title already exists in the database
                     // You can handle this case, e.g., show a message to the user
-                    Toast.makeText(MainActivity.this, "Hotel already exists in the database", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Welcome to Hotel Booking", Toast.LENGTH_SHORT).show();
                 } else {
                     // The hotel does not exist, so add it to the database
                     HotelItem hotel = new HotelItem(id, title, rating, price, imageResId);

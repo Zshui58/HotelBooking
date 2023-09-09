@@ -48,7 +48,7 @@ public class PaymentActivity extends Activity {
         spinnerCountry = findViewById(R.id.spinnerCountry);
         checkBoxSaveForFutureUse = findViewById(R.id.checkBoxSaveForFutureUse);
         btnSubmit = findViewById(R.id.btnSubmit);
-        viewTransactionsButton = findViewById(R.id.viewTransactionsButton); // Initialize viewTransactionsButton
+        viewTransactionsButton = findViewById(R.id.viewTransactionsButton);
         sharedPreferences = getSharedPreferences("PaymentData", MODE_PRIVATE);
 
 
@@ -201,8 +201,6 @@ public class PaymentActivity extends Activity {
     }
 
     private boolean simulatePaymentProcessing(String cardNumber, String expiration, String cvv) {
-        // Simulate payment processing logic here
-        // For demonstration purposes, let's assume payment is successful 80% of the time
         return Math.random() < 0.8;
     }
 }

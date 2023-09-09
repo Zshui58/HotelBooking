@@ -2,7 +2,7 @@ package my.edu.utar.hotelbooking;
 
 import java.util.Random;
 
-public class TransactionIDGenerator {
+public class    TransactionIDGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int ID_LENGTH = 8;
 

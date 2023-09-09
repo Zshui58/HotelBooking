@@ -26,12 +26,6 @@ public class TransactionCheckingActivity extends Activity {
             String checkOutDate = intent.getStringExtra("checkOutDate");
             double grandTotal = intent.getDoubleExtra("grandTotal", 0.0);
 
-            Toast.makeText(this, "Check-in Date: " + checkInDate, Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "Check-out Date: " + checkOutDate, Toast.LENGTH_SHORT).show();
-
-
-
-
 
             // Generate booking IDs for transactions if they don't have one
             for (Transaction transaction : transactions) {
